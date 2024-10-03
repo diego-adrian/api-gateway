@@ -17,15 +17,16 @@ export class CoursesController {
     return this.coursesService.findAll();
   }
 
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
+    return this.coursesService.update(id, updateCourseDto);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     // return this.coursesService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
-    // return this.coursesService.update(+id, updateCourseDto);
-  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
