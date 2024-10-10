@@ -10,7 +10,7 @@ export class CoursesService implements OnApplicationBootstrap {
   private logger = new Logger('CoursesService');
   async onApplicationBootstrap() {
     this.client = ClientProxyFactory.create({
-      transport: Transport.REDIS,
+      transport: Transport.MQTT,
       options: {
         host: process.env.HOST_MICROSERVICE_COURSE,
         port: +process.env.HOST_MICROSERVICE_PORT
@@ -24,7 +24,7 @@ export class CoursesService implements OnApplicationBootstrap {
   async findAll() {
     // const data = await axios.get('https://jsonplaceholder.typicode.com/todos/1');
     // return data.data;
-    return this.client.send({ cmd: coursesMessagePattern.GET_ALL_COURSES }, {});
+    return this.client.send(coursesMessagePattern.GET_ALL_COURSES, {});
   }
 
   create(data: CreateCourseDto) {
