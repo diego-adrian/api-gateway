@@ -10,10 +10,9 @@ export class CoursesService implements OnApplicationBootstrap {
   private logger = new Logger('CoursesService');
   async onApplicationBootstrap() {
     this.client = ClientProxyFactory.create({
-      transport: Transport.MQTT,
+      transport: Transport.NATS,
       options: {
-        host: process.env.HOST_MICROSERVICE_COURSE,
-        port: +process.env.HOST_MICROSERVICE_PORT
+        servers: [process.env.HOST_MICROSERVICE_COURSE],
       },
     });
 
