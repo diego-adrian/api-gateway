@@ -8,3 +8,4 @@ export const coursesMessagePattern = {
 }
 
 export const CHANNEL_NOTIFICATION = 'send-email';
+export const QUEUE_SERVICE = 'courses-service';

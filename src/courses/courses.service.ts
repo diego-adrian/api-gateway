@@ -1,7 +1,7 @@
 import { Injectable, Logger, OnApplicationBootstrap } from '@nestjs/common';
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 import axios from 'axios';
-import { CHANNEL_NOTIFICATION, coursesMessagePattern } from '../constants';
+import { CHANNEL_NOTIFICATION, coursesMessagePattern, QUEUE_SERVICE } from '../constants';
 import { CreateCourseDto } from './dto/create-course.dto';
 
 @Injectable()
@@ -10,10 +10,15 @@ export class CoursesService implements OnApplicationBootstrap {
   private logger = new Logger('CoursesService');
   async onApplicationBootstrap() {
     this.client = ClientProxyFactory.create({
-      transport: Transport.NATS,
+      transport: Transport.RMQ,
       options: {
-        servers: [process.env.HOST_MICROSERVICE_COURSE],
-      },
+        urls: [process.env.HOST_MICROSERVICE_COURSE],
+        queue: QUEUE_SERVICE,
+        persistent: true,
+        queueOptions: {
+          durable: true
+        }
+      }
     });
 
     await this.client.connect();
