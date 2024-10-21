@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
+import { AuthGuard } from '../auth/guard/auth.guard';
 
 @Controller('courses')
 export class CoursesController {
@@ -13,6 +14,7 @@ export class CoursesController {
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   findAll() {
     return this.coursesService.findAll();
   }
@@ -24,7 +26,7 @@ export class CoursesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // return this.coursesService.findOne(+id);
+    return this.coursesService.findOne(id);
   }
 
 
